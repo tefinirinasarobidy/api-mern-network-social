@@ -4,6 +4,11 @@ const userController = require('../controllers/user.controller')
 
 // register
 router.post("/register",authController.singUp);
+// login
+router.post('/login',authController.singIn)
+// logout
+router.get('/logout',authController.logout)
+
 // get all user 
 router.get("/",userController.getAllUsers);
 // info user

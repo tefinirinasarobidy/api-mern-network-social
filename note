@@ -1,3 +1,4 @@
 - npm install --save mongoose express cors validator
 - npm install --save body-parser
 - npm i --save bcrypt
+- npm i --s jsonwebtoken
