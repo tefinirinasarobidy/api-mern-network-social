@@ -13,4 +13,9 @@ router.put('/:id',userController.modifyUser)
 // delete user
 router.delete('/:id',userController.deleteUser)
 
+// follow user
+router.patch('/follow/:id',userController.followUser)
+// unfollow user
+router.patch('/unfollow/:id',userController.unfollowUser)
+
 module.exports = router;

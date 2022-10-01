@@ -50,3 +50,63 @@ module.exports.deleteUser = async (req, res ) => {
         return res.status(500).send({message: error})
     }
 }
+
+module.exports.followUser = async  (req, res) => {
+    if(!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.idToFollow)) 
+    return res.status(400).send('id unknow:' + res.params.id)
+    try {
+        // add to the follower list
+        await UserModel.findByIdAndUpdate(
+            req.params.id,
+            {$addToSet: {following: req.body.idToFollow}},
+            {new: true, upsert: true},
+        ).then((docs) => {
+            return res.status(200).json(docs)
+        }).catch((err) => {
+            return res.status(500).json({message: err})
+        })
+        //  add to following list
+        await UserModel.findByIdAndUpdate(
+            req.body.idToFollow,
+            {
+                $addToSet: { followers : req.params.id}
+            },
+            {new: true, upsert: true},
+        ).then((docs) => {
+        }).catch((err) => {
+            return res.status(500).json({message: err})
+        })
+    } catch (error) {
+        return res.status(500).send({message: error})
+    }
+}
+
+module.exports.unfollowUser = async  (req, res) => {
+    if(!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.idToUnFollow)) 
+     return res.status(400).send('id unknow:' + res.params.id)
+    try {
+        // add to the follower list
+        await UserModel.findByIdAndUpdate(
+            req.params.id,
+            {$pull: {following: req.body.idToUnFollow}},
+            {new: true, upsert: true},
+        ).then((docs) => {
+            return res.status(200).json(docs)
+        }).catch((err) => {
+            return res.status(500).json({message: err})
+        })
+        //  add to following list
+        await UserModel.findByIdAndUpdate(
+            req.body.idToUnFollow,
+            {
+                $pull: { followers : req.params.id}
+            },
+            {new: true, upsert: true},
+        ).then((docs) => {
+        }).catch((err) => {
+            return res.status(500).json({message: err})
+        })
+    } catch (error) {
+        return res.status(500).send({message: error})
+    }
+}
