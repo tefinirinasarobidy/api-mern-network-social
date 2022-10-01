@@ -3,3 +3,4 @@
 - npm i --save bcrypt
 - npm i --s jsonwebtoken
 - npm i --s cookie-parser
+- npm i --s multer (upload file)
