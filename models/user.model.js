@@ -27,6 +27,8 @@ const userShema = new mongoose.Schema(
         password: {
             type: String,
             required: true,
+            max: 1824,
+            minlength: 6,
             trim: true
         },
         picture: {
@@ -65,9 +67,9 @@ userShema.statics.login = async function(email,password) {
         if (auth) {
             return user;
         }
-        throw Error('incorrect password')
+        throw ('incorrect password')
     }
-    throw Error('incorrect email')
+    throw ('incorrect email')
 }
 
 const User = mongoose.model('user', userShema);
