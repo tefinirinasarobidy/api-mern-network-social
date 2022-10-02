@@ -13,10 +13,10 @@ const app = express();
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
-
+app.use(cors())
 
 // jwt
-app.get('*',checkUser)
+// app.get('*',checkUser)
 app.get('/jwtid',requireAuth, (req, res) => {
   res.status(200).send(res.locals.user._id)
 })

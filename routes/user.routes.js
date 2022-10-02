@@ -4,6 +4,7 @@ const userController = require('../controllers/user.controller')
 const uploadController  = require('../controllers/upload.controller')
 const multer = require('multer')
 const upload = multer()
+const { checkUser,requireAuth } = require('../middleware/auth.middleware')
 
 // register
 router.post("/register",authController.singUp);
@@ -13,7 +14,7 @@ router.post('/login',authController.singIn)
 router.get('/logout',authController.logout)
 
 // get all user 
-router.get("/",userController.getAllUsers);
+router.get("/",requireAuth,userController.getAllUsers);
 // info user
 router.get('/:id',userController.userInfo)
 // modify user 
